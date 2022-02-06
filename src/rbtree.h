@@ -8,7 +8,7 @@ typedef enum {
 typedef struct Rb_node {
 	int key;
 	rb_color color;
-	Rb_node *parent, *left, *right;
+	struct Rb_node *parent, *left, *right;
 } rb_node;
 
 typedef struct {
