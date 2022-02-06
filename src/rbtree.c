@@ -19,3 +19,23 @@ void left_rotate(rb_tree *tree, rb_node *x) {
 	y->left = x;
 	x->parent = y;
 }
+
+void right_rotate(rb_tree *tree, rb_node *y) {
+	rb_node *x = y->left;
+	y->left = x->right;
+
+	if(x->right != tree->nil)
+		x->right->parent = y;
+
+	x->parent = y->parent;
+
+	if(x->parent == tree->nil)
+		tree->root = x;
+	else if(y = y->parent->left)
+		y->parent->left = x;
+	else
+		y->parent->right = x;
+
+	x->right = y;
+	y->parent = x;
+}
