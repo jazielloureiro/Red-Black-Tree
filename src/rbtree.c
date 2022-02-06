@@ -1,4 +1,15 @@
 #include <stdlib.h>
+
+typedef enum {
+	RED, BLACK
+} rb_color;
+
+typedef struct Rb_node {
+	int key;
+	rb_color color;
+	struct Rb_node *parent, *left, *right;
+} rb_node;
+
 #include "rbtree.h"
 
 rb_tree create_red_black_tree() {
