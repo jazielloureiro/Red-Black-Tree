@@ -16,13 +16,13 @@ OBJECTS_DIR = .obj
 
 # Files
 SOURCE_C = $(wildcard $(SOURCE_DIR)/*.c)
-SOURCE_H = $(filter-out $(SOURCE_DIR)/main.h, $(SOURCE_C:.c=.h))
+SOURCE_H = $(filter-out $(SOURCE_DIR)/tests.h, $(SOURCE_C:.c=.h))
 OBJECTS = $(SOURCE_C:$(SOURCE_DIR)/%.c=$(OBJECTS_DIR)/%.o)
 
-$(BIN): $(SOURCE_H) $(OBJECTS)
+$(BIN): $(OBJECTS)
 	$(CC) $(OBJECTS) -o $@
 
-$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c | $(OBJECTS_DIR)
+$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c $(SOURCE_H) | $(OBJECTS_DIR)
 	$(CC) -c $< -o $@
 
 $(OBJECTS_DIR):
