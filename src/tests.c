@@ -27,6 +27,32 @@ int *get_keys(int keys_qty) {
 	return keys;
 }
 
+int black_height_traversal(rb_node *aux, rb_node *nil) {
+	if(aux == nil)
+		return 1;
+
+	int left_height = black_height_traversal(aux->left, nil),
+	    right_height = black_height_traversal(aux->right, nil);
+
+	if(left_height != right_height || left_height == -1)
+		return -1;
+	else
+		return left_height + (aux->color == BLACK? 1 : 0);
+}
+
+int get_black_height(rb_node *aux, rb_node *nil) {
+	if(aux == nil)
+		return 1;
+
+	int left_height = black_height_traversal(aux->left, nil),
+	    right_height = black_height_traversal(aux->right, nil);
+
+	if(left_height != right_height || left_height == -1)
+		return -1;
+	else
+		return left_height;
+}
+
 int count_nodes(rb_node *aux, rb_node *nil) {
 	if(aux == nil)
 		return 0;
