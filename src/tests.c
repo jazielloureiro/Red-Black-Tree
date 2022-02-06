@@ -53,6 +53,17 @@ int get_black_height(rb_node *aux, rb_node *nil) {
 		return left_height;
 }
 
+bool is_red_black_tree(rb_node *aux, rb_node *nil) {
+	if(aux == nil)
+		return true;
+
+	if(get_black_height(aux, nil) != -1)
+		if(is_red_black_tree(aux->left, nil))
+			return is_red_black_tree(aux->right, nil);
+
+	return false;
+}
+
 int count_nodes(rb_node *aux, rb_node *nil) {
 	if(aux == nil)
 		return 0;
@@ -73,8 +84,17 @@ int main() {
 
 	if(keys_qty == nodes_qty)
 		puts("All keys were inserted.");
-	else
+	else {
 		printf("Something unexpected happened. %d keys were inserted.\n", nodes_qty);
+		exit(EXIT_FAILURE);
+	}
+
+	if(is_red_black_tree(tree.root, tree.nil))
+		puts("The tree is still a red black tree.");
+	else {
+		puts("The tree isn't a red black tree anymore.");
+		exit(EXIT_FAILURE);
+	}
 
 	free(keys);
 
