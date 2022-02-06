@@ -4,7 +4,7 @@
 #include <time.h>
 
 #include "rbtree.h"
-
+ 
 int *get_keys(int keys_qty) {
 	int *keys = malloc(sizeof(int) * keys_qty);
 
@@ -35,8 +35,20 @@ int count_nodes(rb_node *aux, rb_node *nil) {
 }
 
 int main() {
-	const int keys_qty = 10;
+	rb_tree tree = create_red_black_tree();
+	const int keys_qty = 10000;
 	int *keys = get_keys(keys_qty);
+
+	printf("Inserting %d keys.\n", keys_qty);
+	for(int i = 0; i < keys_qty; i++)
+		insert(&tree, keys[i]);
+
+	int nodes_qty = count_nodes(tree.root, tree.nil);
+
+	if(keys_qty == nodes_qty)
+		puts("All keys were inserted.");
+	else
+		printf("Something unexpected happened. %d keys were inserted.\n", nodes_qty);
 
 	free(keys);
 
