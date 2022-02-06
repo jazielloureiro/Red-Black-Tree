@@ -1,6 +1,16 @@
 #include <stdlib.h>
 #include "rbtree.h"
 
+rb_tree create_red_black_tree() {
+	rb_tree tree;
+
+	tree.nil = malloc(sizeof(rb_node));
+	tree.nil->color = BLACK;
+	tree.root = tree.nil;
+
+	return tree;
+}
+
 void left_rotate(rb_tree *tree, rb_node *x) {
 	rb_node *y = x->right;
 	x->right = y->left;
