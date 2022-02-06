@@ -135,3 +135,10 @@ void transplant(rb_tree *tree, rb_node *u, rb_node *v) {
 
 	v->parent = u->parent;
 }
+
+rb_node *tree_minimum(rb_tree *tree, rb_node *x) {
+	while(x->left != tree->nil)
+		x = x->left;
+
+	return x;
+}
