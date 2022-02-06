@@ -124,3 +124,14 @@ void insert(rb_tree *tree, int key) {
 
 	insert_fixup(tree, z);
 }
+
+void transplant(rb_tree *tree, rb_node *u, rb_node *v) {
+	if(u->parent == tree->nil)
+		tree->root = v;
+	else if(u == u->parent->left)
+		u->parent->left = v;
+	else
+		u->parent->right = v;
+
+	v->parent = u->parent;
+}
