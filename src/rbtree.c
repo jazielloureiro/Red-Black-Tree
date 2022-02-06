@@ -39,3 +39,47 @@ void right_rotate(rb_tree *tree, rb_node *y) {
 	x->right = y;
 	y->parent = x;
 }
+
+void insert_fixup(rb_tree *tree, rb_node *z) {
+	while(z->parent->color == RED) {
+		if(z->parent == z->parent->parent->left) {
+			rb_node *y = z->parent->parent->right;
+
+			if(y->color == RED) {
+				z->parent->color = BLACK;
+				y->color = BLACK;
+				z->parent->parent = RED;
+				z = z->parent->parent;
+			} else {
+				if(z == z->parent->right) {
+					z = z->parent;
+					left_rotate(tree, z);
+				}
+
+				z->parent->color = BLACK;
+				z->parent->parent->color = RED;
+				right_rotate(tree, z->parent->parent);
+			}
+		} else {
+			rb_node *y = z->parent->parent->left;
+
+			if(y->color == RED) {
+				z->parent->color = BLACK;
+				y->color = BLACK;
+				z->parent->parent = RED;
+				z = z->parent->parent;
+			} else {
+				if(z == z->parent->left) {
+					z = z->parent;
+					right_rotate(tree, z);
+				}
+
+				z->parent->color = BLACK;
+				z->parent->parent->color = RED;
+				left_rotate(tree, z->parent->parent);
+			}
+		}
+	}
+
+	tree->root->color = BLACK;
+}
