@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "rbtree.h"
 
 void left_rotate(rb_tree *tree, rb_node *x) {
@@ -82,4 +83,33 @@ void insert_fixup(rb_tree *tree, rb_node *z) {
 	}
 
 	tree->root->color = BLACK;
+}
+
+void insert(rb_tree *tree, int key) {
+	rb_node *x = tree->root, *y = tree->nil;
+
+	while(x != tree->nil) {
+		y = x;
+
+		if(key < x->key)
+			x = x->left;
+		else
+			x = x->right;
+	}
+
+	rb_node *z = malloc(sizeof(rb_node));
+	z->key = key;
+	z->color = RED;
+	z->parent = y;
+	z->left = tree->nil;
+	z->right = tree->nil;
+
+	if(y == tree->nil)
+		tree->root;
+	else if(key < y->key)
+		y->left = z;
+	else
+		y->right = z;
+
+	insert_fixup(tree, z);
 }
