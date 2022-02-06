@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "rbtree.h"
 
 rb_tree create_red_black_tree() {
@@ -42,7 +43,7 @@ void right_rotate(rb_tree *tree, rb_node *y) {
 
 	if(x->parent == tree->nil)
 		tree->root = x;
-	else if(y = y->parent->left)
+	else if(y == y->parent->left)
 		y->parent->left = x;
 	else
 		y->parent->right = x;
@@ -59,7 +60,7 @@ void insert_fixup(rb_tree *tree, rb_node *z) {
 			if(y->color == RED) {
 				z->parent->color = BLACK;
 				y->color = BLACK;
-				z->parent->parent = RED;
+				z->parent->parent->color = RED;
 				z = z->parent->parent;
 			} else {
 				if(z == z->parent->right) {
@@ -77,7 +78,7 @@ void insert_fixup(rb_tree *tree, rb_node *z) {
 			if(y->color == RED) {
 				z->parent->color = BLACK;
 				y->color = BLACK;
-				z->parent->parent = RED;
+				z->parent->parent->color = RED;
 				z = z->parent->parent;
 			} else {
 				if(z == z->parent->left) {
@@ -115,7 +116,7 @@ void insert(rb_tree *tree, int key) {
 	z->right = tree->nil;
 
 	if(y == tree->nil)
-		tree->root;
+		tree->root = z;
 	else if(key < y->key)
 		y->left = z;
 	else
