@@ -142,3 +142,65 @@ rb_node *tree_minimum(rb_tree *tree, rb_node *x) {
 
 	return x;
 }
+
+void delete_fixup(rb_tree *tree, rb_node *x) {
+	while(x != tree->root && x->color == BLACK) {
+		if(x == x->parent->left) {
+			rb_node *w = x->parent->right;
+
+			if(w->color == RED) {
+				w->color = BLACK;
+				x->parent->color = RED;
+				left_rotate(tree, x->parent);
+				w = x->parent->right;
+			}
+
+			if(w->left->color == BLACK && w->right->color == BLACK) {
+				w->color = RED;
+				x = x->parent;
+			} else {
+				if(w->right->color == BLACK) {
+					w->left->color = BLACK;
+					w->color = RED;
+					right_rotate(tree, w);
+					w = x->parent->right;
+				}
+
+				w->color = x->parent->color;
+				x->parent->color = BLACK;
+				w->right->color = BLACK;
+				left_rotate(tree, x->parent);
+				x = tree->root;
+			}
+		} else {
+			rb_node *w = x->parent->left;
+
+			if(w->color == RED) {
+				w->color = BLACK;
+				x->parent->color = RED;
+				right_rotate(tree, x->parent);
+				w = x->parent->left;
+			}
+
+			if(w->right->color == BLACK && w->left->color == BLACK) {
+				w->color = RED;
+				x = x->parent;
+			} else {
+				if(w->left->color == BLACK) {
+					w->right->color = BLACK;
+					w->color = RED;
+					left_rotate(tree, w);
+					w = x->parent->left;
+				}
+
+				w->color = x->parent->color;
+				x->parent->color = BLACK;
+				w->left->color = BLACK;
+				right_rotate(tree, x->parent);
+				x = tree->root;
+			}
+		}
+	}
+
+	x->color = BLACK;
+}
