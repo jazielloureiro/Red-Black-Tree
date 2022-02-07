@@ -215,3 +215,41 @@ void delete_fixup(rb_tree *tree, rb_node *x) {
 
 	x->color = BLACK;
 }
+
+void delete(rb_tree *tree, int key) {
+	rb_node *z = get_node(tree->root, tree->nil, key);
+
+	if(z == tree->nil)
+		return;
+
+	rb_node *y = z, *x;
+	rb_color y_original_color = y->color;
+
+	if(z->left == tree->nil) {
+		x = z->right;
+		transplant(tree, z, z->right);
+	} else if(z->right == tree->nil) {
+		x = z->left;
+		transplant(tree, z, z->left);
+	} else {
+		y = tree_minimum(tree, z->right);
+		y_original_color = y->color;
+		x = y->right;
+
+		if(y->parent == z)
+			x->parent = y;
+		else {
+			transplant(tree, y, y->right);
+			y->right = z->right;
+			y->right->parent = y;
+		}
+
+		transplant(tree, z, y);
+		y->left = z->left;
+		y->left->parent = y;
+		y->color = z->color;
+	}
+
+	if(y_original_color = BLACK)
+		delete_fixup(tree, x);
+}
