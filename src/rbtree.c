@@ -125,6 +125,17 @@ void insert(rb_tree *tree, int key) {
 	insert_fixup(tree, z);
 }
 
+rb_node *get_node(rb_node *aux, rb_node *nil, int key) {
+	if(aux == nil)
+		return nil;
+	else if(aux->key < key)
+		return get_node(aux->left, nil, key);
+	else if(aux->key > key)
+		return get_node(aux->right, nil, key);
+	else
+		return aux;
+}
+
 void transplant(rb_tree *tree, rb_node *u, rb_node *v) {
 	if(u->parent == tree->nil)
 		tree->root = v;
