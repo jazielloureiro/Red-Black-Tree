@@ -19,4 +19,6 @@ rb_tree create_red_black_tree();
 
 void insert(rb_tree *tree, int key);
 
+void delete(rb_tree *tree, int key);
+
 #endif
