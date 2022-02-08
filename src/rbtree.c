@@ -128,9 +128,9 @@ void insert(rb_tree *tree, int key) {
 rb_node *get_node(rb_node *aux, rb_node *nil, int key) {
 	if(aux == nil)
 		return nil;
-	else if(aux->key < key)
-		return get_node(aux->left, nil, key);
 	else if(aux->key > key)
+		return get_node(aux->left, nil, key);
+	else if(aux->key < key)
 		return get_node(aux->right, nil, key);
 	else
 		return aux;
@@ -250,6 +250,6 @@ void delete(rb_tree *tree, int key) {
 		y->color = z->color;
 	}
 
-	if(y_original_color = BLACK)
+	if(y_original_color == BLACK)
 		delete_fixup(tree, x);
 }
