@@ -96,6 +96,27 @@ int main() {
 		exit(EXIT_FAILURE);
 	}
 
+	int delete_qty = keys_qty / 10;
+	printf("Deleting %d keys.\n", delete_qty);
+	for(int i = 0; i < keys_qty; i += 10)
+		delete(&tree, keys[i]);
+
+	nodes_qty = count_nodes(tree.root, tree.nil);
+
+	if(keys_qty - delete_qty == nodes_qty)
+		puts("All keys were deleted.");
+	else {
+		printf("Something unexpected happened. %d keys are in the tree.\n", nodes_qty);
+		exit(EXIT_FAILURE);
+	}
+
+	if(is_red_black_tree(tree.root, tree.nil))
+		puts("The tree is still a red black tree.");
+	else {
+		puts("The tree isn't a red black tree anymore.");
+		exit(EXIT_FAILURE);
+	}
+
 	free(keys);
 
 	return 0;
