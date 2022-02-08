@@ -118,6 +118,7 @@ int main() {
 	}
 
 	free(keys);
+	free_red_black_tree(&tree);
 
 	return 0;
 }

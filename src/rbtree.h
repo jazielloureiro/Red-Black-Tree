@@ -21,4 +21,6 @@ void insert(rb_tree *tree, int key);
 
 void delete(rb_tree *tree, int key);
 
+void free_red_black_tree(rb_tree *tree);
+
 #endif

@@ -251,4 +251,19 @@ void delete(rb_tree *tree, int key) {
 
 	if(y_original_color == BLACK)
 		delete_fixup(tree, x);
+
+	free(z);
+}
+
+void free_traversal(rb_node *aux, rb_node *nil) {
+	if(aux != nil) {
+		free_traversal(aux->left, nil);
+		free_traversal(aux->right, nil);
+		free(aux);
+	}
+}
+
+void free_red_black_tree(rb_tree *tree) {
+	free_traversal(tree->root, tree->nil);
+	free(tree->nil);
 }
